@@ -71,7 +71,7 @@ export const loginUser = async (req, res) => {
 
 export const userProfile = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
+        const user = await User.findById(req.user.id);
         if(!user){
             return res.status(400).json({
                 success : false,
@@ -117,7 +117,7 @@ export const getAllUsers = async (req, res) => {
 
 export const updateUser = async (req, res) => {
     try {
-        const user = await User.findByIdAndUpdate(req.params.id, req.body,{
+        const user = await User.findByIdAndUpdate(req.user.id, req.body,{
             new : true,
             runValidators : true
         });
@@ -168,7 +168,7 @@ export const deleteUser = async (req, res) => {
 
 export const resetPasswordRequest = async (req, res) => {
     try {
-        const { email } = req.body;;
+        const { email } = req.body;
         const user = await User.findOne({email});
 
         if(!user){
@@ -241,5 +241,16 @@ export const resetPassword = async (req, res) => {
         })
     }
 }
+
+// const logoutUser = async (req, res) => {
+//     try {
+//         return res.cookies("null").json({
+//             success : true,
+//             message : "Loggedout successfully"
+//         })
+//     } catch (error) {
+        
+//     }
+// }
 
 // 9:54

@@ -1,3 +1,4 @@
+import User from "../models/usersModels.js";
 import Product from "../models/productsModel.js";
 
 // crud => create, read, update, delete
@@ -70,7 +71,7 @@ export const getAllProducts = async (req, res) => {
 
 export const getProductDetail = async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id );
+        const product = await Product.findById(req.params.id);
         console.log(product)
         if(!product){
             return res.status(401).json({
@@ -133,6 +134,25 @@ export const deleteProduct = async (req, res) => {
         return res.status(200).json({
             success : true,
             message : "Product deleted successfully"
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            success : false,
+            error
+        })
+    }
+}
+
+export const combineData = async (req, res) => {
+    try {
+        const users = await User.find();
+        const products = await Product.find();
+
+        return res.status(200).json({
+            success : true,
+            user : users.length,
+            product : products.length
         })
     } catch (error) {
         console.log(error)

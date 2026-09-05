@@ -5,9 +5,9 @@ const userRouter = express.Router();
 
 userRouter.post("/register-user", registerUser);
 userRouter.post("/login-user", loginUser);
-userRouter.get("/user-profile/:id", isAuthenticatedUser, userProfile)
+userRouter.get("/user-profile", isAuthenticatedUser, userProfile)
 userRouter.get("/get-all-users", isAuthenticatedUser, isAdmin("admin"), getAllUsers);
-userRouter.patch("/update-user/:id", isAuthenticatedUser, updateUser);
+userRouter.patch("/update-user", isAuthenticatedUser, updateUser);
 userRouter.delete("/delete-user/:id", isAuthenticatedUser, isAdmin("admin"), deleteUser)
 userRouter.post("/reset-password-request", resetPasswordRequest);
 userRouter.post("/reset-password/:token", resetPassword)

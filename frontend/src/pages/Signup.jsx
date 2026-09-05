@@ -18,8 +18,14 @@ const Signup = () => {
         const response = await axios.post("http://localhost:8000/api/v1/user/register-user", form, {
             withCredentials : true
         })
+        localStorage.setItem('user', JSON.stringify(response.data.user))
         toast.success("User registered successfully")
-        navigate("/") 
+        if(response.data.user.role === "admin"){
+          navigate("/admin")
+        } else {
+          navigate("/")
+        }
+        
     } catch (error) {
         toast.error("Something went wrong")
     }

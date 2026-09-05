@@ -13,11 +13,18 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-        await axios.post("http://localhost:8000/api/v1/user/login-user", form, {
+        const response = await axios.post("http://localhost:8000/api/v1/user/login-user", form, {
             withCredentials : true
         })
+        // console.log(response.data.user.role)
+        localStorage.setItem('user', JSON.stringify(response.data.user))
         toast.success("user loggedin successfully");
-        navigate("/")
+        if(response.data.user.role === "admin"){
+          navigate("/admin")
+        } else {
+          navigate("/")
+        }
+        
     } catch (error) {
         toast.error("something went wrong")
     }
